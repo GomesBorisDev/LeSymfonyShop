@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SneakersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -61,6 +63,16 @@ class Sneakers
      * @ORM\Column(type="datetime")
      */
     private $addedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SneakersStock::class, mappedBy="Sneaker")
+     */
+    private $sneakersStocks;
+
+    public function __construct()
+    {
+        $this->sneakersStocks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -171,6 +183,37 @@ class Sneakers
     public function setAddedAt(\DateTimeInterface $addedAt): self
     {
         $this->addedAt = $addedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SneakersStock[]
+     */
+    public function getSneakersStocks(): Collection
+    {
+        return $this->sneakersStocks;
+    }
+
+    public function addSneakersStock(SneakersStock $sneakersStock): self
+    {
+        if (!$this->sneakersStocks->contains($sneakersStock)) {
+            $this->sneakersStocks[] = $sneakersStock;
+            $sneakersStock->setSneaker($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSneakersStock(SneakersStock $sneakersStock): self
+    {
+        if ($this->sneakersStocks->contains($sneakersStock)) {
+            $this->sneakersStocks->removeElement($sneakersStock);
+            // set the owning side to null (unless already changed)
+            if ($sneakersStock->getSneaker() === $this) {
+                $sneakersStock->setSneaker(null);
+            }
+        }
 
         return $this;
     }
