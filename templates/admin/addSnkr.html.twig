@@ -5,6 +5,12 @@
 {% block body %}
     <h2>AddSneaker.</h2>
 
+    {% if errors is not empty %}
+        <div class="alert alert-danger">{{ errors|raw }}</div>
+    {% elseif success == true %}
+        <div class="alert alert-success">Sneaker added !</div>
+    {% endif %}
+
     <form method="post" class="col-8">
 
         <div class="form-group">
@@ -55,22 +61,24 @@
             <input class="col-md-9" type="file" name="picture3" id="picture3" accept="image/*">
         </div>
 
-        {% for key, size in sneakerSizes %}
-        <div class="size-group">
-            <div class="form-group">
-                <label for="size" class="col-2 col-form-label">{{ size }}</label>
-                <input name="size" value="{{ size }}" type="checkbox">
+        <div class="d-flex flex-row">
+            {% for key, size in sneakerSizes %}
+            <div class="size-group">
+                <div class="form-group d-flex flex-column">
+                    <label for="size" class="col-2 col-form-label">{{ size }}</label>
+                    <input name="size" value="{{ size }}" type="checkbox">
+                </div>
+                <div class="form-group d-flex flex-column">
+                    <label for="price" class="col-2 col-form-label">Price</label>
+                    <input type="number" name="price" min="1" max="50000">
+                </div>
+                <div class="form-group d-flex flex-column">
+                    <label for="quantity" class="col-2 col-form-label">Quantity</label>
+                    <input type="number" name="quantity" min="1" max="100">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="price" class="col-2 col-form-label">Price</label>
-                <input type="number" name="price" min="1" max="50000">
-            </div>
-            <div class="form-group">
-                <label for="quantity" class="col-2 col-form-label">Quantity</label>
-                <input type="number" name="quantity" min="1" max="100">
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
 
         <button type="submit" class="btn btn-lg btn-primary">Add Sneaker</button>
 
