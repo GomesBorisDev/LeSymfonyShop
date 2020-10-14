@@ -11,7 +11,7 @@
         <div class="alert alert-success">Sneaker added !</div>
     {% endif %}
 
-    <form method="post" class="col-8">
+    <form method="post" class="col-8" enctype="multipart/form-data">
 
         <div class="form-group">
             <label for="sku" class="col-2 col-form-label">SKU</label>
@@ -50,18 +50,18 @@
 
         <div class="form-group">
             <label class="col-md-3" for="picture1">Picture 1 :</label>
-            <input class="col-md-9" type="file" name="picture1" id="picture1" accept="image/*">
+            <input class="col-md-9" type="file" name="picture1" id="picture1" accept="image/*" value="">
         </div>
         <div class="form-group">
             <label class="col-md-3" for="picture2">Picture 2 :</label>
-            <input class="col-md-9" type="file" name="picture2" id="picture2" accept="image/*">
+            <input class="col-md-9" type="file" name="picture2" id="picture2" accept="image/*" value="">
         </div>
         <div class="form-group">
             <label class="col-md-3" for="picture3">Picture 3 :</label>
             <input class="col-md-9" type="file" name="picture3" id="picture3" accept="image/*">
         </div>
 
-        <div class="d-flex flex-row">
+        {# <div class="d-flex flex-row">
             {% for key, size in sneakerSizes %}
             <div class="size-group">
                 <div class="form-group d-flex flex-column">
@@ -78,7 +78,7 @@
                 </div>
             </div>
             {% endfor %}
-        </div>
+        </div> #}
 
         <button type="submit" class="btn btn-lg btn-primary">Add Sneaker</button>
 
